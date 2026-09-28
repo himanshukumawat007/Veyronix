@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  # BHU-DRISHTI Full-Stack Application & API Gateway
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bhu_drishti_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - GRAFANA_PUBLIC_URL=http://localhost:3001
+      - GRAFANA_URL=http://grafana:3000
+      - GRAFANA_API_KEY=${GRAFANA_API_KEY}
+      - GRAFANA_ORG_ID=1
+      - GRAFANA_DATASOURCE_UID=postgres
+      - SQL_HOST=postgres:5432
+      - SQL_USER=${SQL_USER:-bhu_user}
+      - SQL_PASSWORD=${SQL_PASSWORD:-bhu_password}
+      - SQL_DB_NAME=${SQL_DB_NAME:-bhu_drishti}
+    depends_on:
+      - postgres
+      - grafana
+      - ai-service
+
+  # PostgreSQL Relational Database (Stores telemetry_records, sensor_nodes, alerts)
+  postgres:
+    image: postgres:15-alpine
+    container_name: bhu_drishti_postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${SQL_USER:-bhu_user}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD:-bhu_password}
+      - POSTGRES_DB=${SQL_DB_NAME:-bhu_drishti}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Grafana Analytical Visualizer & Provisioning
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: bhu_drishti_grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=bhu-drishti
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards/json:ro
+    depends_on:
+      - postgres
+
+  # Standalone Python ML Inference Service (Optional microservice)
+  ai-service:
+    build:
+      context: ./ai
+      dockerfile: Dockerfile
+    container_name: bhu_drishti_ai
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+
+volumes:
+  postgres_data:
+  grafana_data:

@@ -1,0 +1,190 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "id": 5,
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "type": "gauge",
+      "title": "Panel 5: Current Geotechnical Risk Score",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT risk_score FROM telemetry_records ORDER BY timestamp DESC LIMIT 1;",
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 100,
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "#10b981", "value": null },
+              { "color": "#f59e0b", "value": 32 },
+              { "color": "#ef4444", "value": 68 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "type": "stat",
+      "title": "Panel 6: Geotechnical Risk Status",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT risk_status FROM telemetry_records ORDER BY timestamp DESC LIMIT 1;",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 0 },
+      "type": "stat",
+      "title": "Panel 7: Node Activity & Online Sensors",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT COUNT(DISTINCT node_id) as online_nodes FROM telemetry_records WHERE timestamp >= NOW() - INTERVAL '5 minutes';",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 0 },
+      "type": "timeseries",
+      "title": "Panel 8: Data Ingestion Rate (pkt/min)",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT date_trunc('minute', timestamp) as time, COUNT(*) as packets FROM telemetry_records WHERE $__timeFilter(timestamp) GROUP BY 1 ORDER BY 1 ASC;",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 6 },
+      "type": "timeseries",
+      "title": "Panel 1: Ax / Ay / Az Telemetry (MPU6050 Accelerometer)",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT timestamp as time, ax as \"Ax (m/s²)\", ay as \"Ay (m/s²)\", az as \"Az (m/s²)\" FROM telemetry_records WHERE $__timeFilter(timestamp) ORDER BY timestamp ASC;",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "lineWidth": 2, "fillOpacity": 10 },
+          "unit": "accMS2"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 6 },
+      "type": "timeseries",
+      "title": "Panel 2: Potentiometer Physical Shear Displacement",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT timestamp as time, displacement_mm as \"Displacement (mm)\" FROM telemetry_records WHERE $__timeFilter(timestamp) ORDER BY timestamp ASC;",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "lineWidth": 2, "fillOpacity": 15 },
+          "unit": "lengthmm"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 15 },
+      "type": "timeseries",
+      "title": "Panel 3: Acceleration Magnitude |a| = √(Ax² + Ay² + Az²)",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT timestamp as time, acceleration_magnitude as \"|a| (m/s²)\" FROM telemetry_records WHERE $__timeFilter(timestamp) ORDER BY timestamp ASC;",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 15 },
+      "type": "timeseries",
+      "title": "Panel 4: Acceleration Deviation | |a| - 9.806 m/s² |",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT timestamp as time, acceleration_deviation as \"Deviation (m/s²)\" FROM telemetry_records WHERE $__timeFilter(timestamp) ORDER BY timestamp ASC;",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "gridPos": { "h": 8, "w": 16, "x": 0, "y": 23 },
+      "type": "timeseries",
+      "title": "Panel 9: Historical Risk Score & Trend Timeline",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT timestamp as time, risk_score as \"Risk Score (%)\" FROM telemetry_records WHERE $__timeFilter(timestamp) ORDER BY timestamp ASC;",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 23 },
+      "type": "stat",
+      "title": "Panel 10: End-to-End System Health",
+      "datasource": { "type": "postgres", "uid": "postgres" },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "postgres" },
+          "rawSql": "SELECT COUNT(*) as packets_last_minute FROM telemetry_records WHERE timestamp >= NOW() - INTERVAL '1 minute';",
+          "format": "table"
+        }
+      ]
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["bhu-drishti", "geotechnical", "lora", "iot", "postgresql"],
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {
+    "refresh_intervals": ["1s", "5s", "10s", "30s", "1m"]
+  },
+  "timezone": "browser",
+  "title": "BHU-DRISHTI — Geotechnical Ground Monitoring System (PostgreSQL)",
+  "uid": "bhu-drishti-telemetry",
+  "version": 2
+}

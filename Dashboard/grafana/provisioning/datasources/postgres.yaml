@@ -1,0 +1,20 @@
+apiVersion: 1
+
+datasources:
+  - name: PostgreSQL
+    type: postgres
+    access: proxy
+    uid: postgres
+    url: ${SQL_HOST:-localhost:5432}
+    user: ${SQL_USER:-ai_studio_app_user}
+    database: ${SQL_DB_NAME:-cloud_sql_development_database}
+    isDefault: true
+    jsonData:
+      sslmode: disable
+      maxOpenConns: 5
+      maxIdleConns: 2
+      connMaxLifetime: 14400
+      postgresVersion: 1500
+    secureJsonData:
+      password: ${SQL_PASSWORD:-}
+    editable: true

@@ -1,0 +1,26 @@
+{
+  "model_name": "BHU-DRISHTI Random Forest Geotechnical Classifier",
+  "version": "1.2.0-prototype",
+  "training_data_type": "Synthetic geotechnical vibration and displacement telemetry",
+  "is_synthetic_trained": true,
+  "classes": [
+    "NORMAL",
+    "WARNING",
+    "CRITICAL"
+  ],
+  "feature_importance": {
+    "acceleration_deviation": 0.38,
+    "pot_displacement": 0.28,
+    "ax_transverse": 0.14,
+    "ay_thrust": 0.12,
+    "az_vertical": 0.08
+  },
+  "calibrated_weights": {
+    "acceleration_deviation": 0.38,
+    "pot_displacement": 0.28,
+    "ax": 0.14,
+    "ay": 0.12,
+    "az": 0.08
+  },
+  "retraining_instructions": "To retrain with real field data, export records from /api/sensors/history into CSV, replace generate_synthetic_dataset() with empirical sensor logs, and execute python3 ai/train_model.py."
+}

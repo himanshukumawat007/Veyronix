@@ -1,0 +1,6 @@
+{
+  "name": "BHU DRISHTI",
+  "description": "IoT-based ground movement monitoring, AI early-warning system, and analytical dashboard with Grafana integration",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

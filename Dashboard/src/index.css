@@ -1,0 +1,484 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-plex: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-plexmono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* BHU-DRISHTI platform — control-room neutral surfaces */
+  --color-ink-950: #07090d;
+  --color-ink-900: #0b0f14;
+  --color-ink-850: #0f141b;
+  --color-ink-800: #121821;
+  --color-ink-750: #18202b;
+  --color-ink-700: #202a37;
+  --color-ink-600: #2c3848;
+  --color-ink-500: #3d4b5e;
+  --color-fg: #e6edf3;
+  --color-fg-2: #b3bfcc;
+  --color-fg-3: #8594a6;
+  --color-signal: #4ea1ff;
+  --color-signal-strong: #2f7fe0;
+
+  /* Reserved status colours (never reused for data series) */
+  --color-risk-normal: #22c55e;
+  --color-risk-warning: #f5a524;
+  --color-risk-critical: #ef4444;
+  --color-risk-offline: #6b7280;
+
+  /* Categorical node series (validated for CVD + contrast on #121821) */
+  --color-series-1: #3987e5;
+  --color-series-2: #d55181;
+  --color-series-3: #9085e9;
+  --color-series-4: #199e70;
+}
+
+/* Analytical futuristic custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080d1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Subtle grid pattern for analytical background */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 24px -4px rgba(6, 182, 212, 0.25);
+}
+
+.glow-rose {
+  box-shadow: 0 0 24px -4px rgba(244, 63, 94, 0.3);
+}
+
+.glow-amber {
+  box-shadow: 0 0 24px -4px rgba(245, 158, 11, 0.25);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 24px -4px rgba(16, 185, 129, 0.25);
+}
+
+/* =========================================================
+   FUTURISTIC ANALYTICAL MULTI-COLOUR THEME SYSTEM
+   Foundation: Black / Graphite / Warm Charcoal (NO dark blue/navy)
+   Accents: Emerald, Mint, Amber, Coral, Cyan, Purple, Orange
+   Strictly styling only — no words or content modified
+   ========================================================= */
+
+/* Base Canvas & Panels: Variable Theme Definition */
+:root {
+  --chart-grid: #e2e8f0;
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-border: #e2e8f0;
+  --chart-tooltip-text: #0f172a;
+}
+
+[data-theme="graphite"], [data-theme="cyber"], [data-theme="emerald"] {
+  --chart-grid: #1e293b;
+  --chart-tooltip-bg: rgba(15, 23, 42, 0.95);
+  --chart-tooltip-border: #334155;
+  --chart-tooltip-text: #ffffff;
+}
+
+:root, [data-theme="cyber"], [data-theme="graphite"] {
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Base Canvas & Panels: Neutral Graphite Black */
+:root, [data-theme="cyber"], [data-theme="graphite"] {
+  --canvas-bg: #0a0d14;
+  --card-bg: #11151f;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --header-bg: rgba(13, 17, 26, 0.92);
+  --sidebar-bg: #0d111a;
+}
+
+[data-theme="cyber"] .bg-\[\#070b14\], [data-theme="graphite"] .bg-\[\#070b14\] {
+  background-color: #090c12 !important;
+}
+
+[data-theme="cyber"] .bg-\[\#0b1329\], [data-theme="graphite"] .bg-\[\#0b1329\] {
+  background-color: #111520 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="cyber"] .bg-\[\#090f1d\], [data-theme="cyber"] .bg-\[\#090f1d\]\/85, [data-theme="cyber"] .bg-\[\#090f1d\]\/95,
+[data-theme="graphite"] .bg-\[\#090f1d\], [data-theme="graphite"] .bg-\[\#090f1d\]\/85, [data-theme="graphite"] .bg-\[\#090f1d\]\/95 {
+  background-color: #0d111a !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+[data-theme="cyber"] .bg-\[\#070b15\], [data-theme="cyber"] .bg-\[\#070b15\]\/90,
+[data-theme="graphite"] .bg-\[\#070b15\], [data-theme="graphite"] .bg-\[\#070b15\]\/90 {
+  background-color: #090c13 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme="cyber"] .border-slate-800\/80, [data-theme="cyber"] .border-slate-800,
+[data-theme="graphite"] .border-slate-800\/80, [data-theme="graphite"] .border-slate-800 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="cyber"] .bg-grid-pattern, [data-theme="graphite"] .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px) !important;
+}
+
+/* 2. Emerald Tactical Radar Theme */
+[data-theme="emerald"] {
+  color-scheme: dark;
+}
+[data-theme="emerald"] .bg-\[\#070b14\] {
+  background-color: #080d0a !important;
+}
+[data-theme="emerald"] .bg-\[\#0b1329\] {
+  background-color: #0e1611 !important;
+  border-color: rgba(16, 185, 129, 0.22) !important;
+  box-shadow: 0 4px 24px rgba(16, 185, 129, 0.05), 0 8px 32px rgba(0, 0, 0, 0.45) !important;
+}
+[data-theme="emerald"] .bg-\[\#090f1d\], [data-theme="emerald"] .bg-\[\#090f1d\]\/85, [data-theme="emerald"] .bg-\[\#090f1d\]\/95 {
+  background-color: #0a110d !important;
+  border-color: rgba(16, 185, 129, 0.18) !important;
+}
+[data-theme="emerald"] .bg-\[\#070b15\], [data-theme="emerald"] .bg-\[\#070b15\]\/90 {
+  background-color: #060a08 !important;
+  border-color: rgba(16, 185, 129, 0.15) !important;
+}
+[data-theme="emerald"] .border-slate-800\/80, [data-theme="emerald"] .border-slate-800 {
+  border-color: rgba(16, 185, 129, 0.2) !important;
+}
+[data-theme="emerald"] .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(16, 185, 129, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 185, 129, 0.035) 1px, transparent 1px) !important;
+}
+
+/* 3. Light Technical Lab Theme */
+[data-theme="light"] {
+  color-scheme: light;
+  background-color: #f8fafc !important;
+}
+
+[data-theme="light"] body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .bg-\[\#070b14\] {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .bg-\[\#0b1329\] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .bg-\[\#090f1d\], 
+[data-theme="light"] .bg-\[\#090f1d\]\/85, 
+[data-theme="light"] .bg-\[\#090f1d\]\/95 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .bg-\[\#070b15\], 
+[data-theme="light"] .bg-\[\#070b15\]\/90 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* MetricCard & Sub-panel overrides */
+[data-theme="light"] .bg-\[\#121820\] {
+  background-color: #f0fdf4 !important;
+  border-color: #bbf7d0 !important;
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.08) !important;
+}
+
+[data-theme="light"] .bg-\[\#19161a\] {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.08) !important;
+}
+
+[data-theme="light"] .bg-\[\#1a1218\] {
+  background-color: #fef2f2 !important;
+  border-color: #fecaca !important;
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.08) !important;
+}
+
+[data-theme="light"] .bg-\[\#131722\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .bg-zinc-800\/80 {
+  background-color: #f1f5f9 !important;
+}
+
+[data-theme="light"] .border-zinc-700\/60,
+[data-theme="light"] .border-zinc-800\/80,
+[data-theme="light"] .border-zinc-800\/90 {
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .text-white {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .text-slate-400 {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .text-slate-300 {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .text-slate-200 {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .text-slate-100 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .text-cyan-400 {
+  color: #0284c7 !important;
+}
+
+[data-theme="light"] .text-cyan-300 {
+  color: #0369a1 !important;
+}
+
+[data-theme="light"] .text-emerald-400 {
+  color: #059669 !important;
+}
+
+[data-theme="light"] .text-amber-400 {
+  color: #d97706 !important;
+}
+
+[data-theme="light"] .text-rose-400 {
+  color: #e11d48 !important;
+}
+
+[data-theme="light"] .text-emerald-300 {
+  color: #047857 !important;
+}
+
+[data-theme="light"] .text-amber-300 {
+  color: #b45309 !important;
+}
+
+[data-theme="light"] .text-rose-300 {
+  color: #be123c !important;
+}
+
+[data-theme="light"] .bg-emerald-500\/15 {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+[data-theme="light"] .bg-amber-500\/15 {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+[data-theme="light"] .bg-rose-500\/15,
+[data-theme="light"] .bg-rose-500\/20 {
+  background-color: #fef2f2 !important;
+  border-color: #fecaca !important;
+}
+
+/* Ensure colored badges and action buttons retain white text */
+[data-theme="light"] .bg-rose-500,
+[data-theme="light"] .bg-rose-600,
+[data-theme="light"] .bg-blue-600,
+[data-theme="light"] .bg-emerald-600,
+[data-theme="light"] .bg-cyan-600,
+[data-theme="light"] .bg-purple-600 {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .bg-rose-500 *,
+[data-theme="light"] .bg-rose-600 *,
+[data-theme="light"] .bg-blue-600 *,
+[data-theme="light"] .bg-emerald-600 *,
+[data-theme="light"] .bg-cyan-600 *,
+[data-theme="light"] .bg-purple-600 * {
+  color: #ffffff !important;
+}
+
+/* Ensure Overview KPI Cards always have high-contrast, fully visible text */
+.kpi-title {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+}
+
+.kpi-value-sky {
+  color: #0369a1 !important;
+}
+
+.kpi-value-emerald {
+  color: #047857 !important;
+}
+
+.kpi-value-amber {
+  color: #b45309 !important;
+}
+
+.kpi-value-rose {
+  color: #be123c !important;
+}
+
+.kpi-value-purple {
+  color: #6d28d9 !important;
+}
+
+.kpi-value-teal {
+  color: #0f766e !important;
+}
+
+[data-theme="light"] .border-slate-800\/80, 
+[data-theme="light"] .border-slate-800 {
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .border-slate-700, 
+[data-theme="light"] .border-slate-700\/60 {
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .bg-slate-900, 
+[data-theme="light"] .bg-slate-900\/90, 
+[data-theme="light"] .bg-slate-900\/80,
+[data-theme="light"] .bg-slate-900\/60 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .bg-slate-800, 
+[data-theme="light"] .bg-slate-800\/60,
+[data-theme="light"] .bg-slate-800\/40 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+[data-theme="light"] .bg-\[\#160e1d\] {
+  background-color: #fef2f2 !important;
+  border-color: #fecaca !important;
+}
+
+[data-theme="light"] .bg-\[\#171415\] {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+[data-theme="light"] .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px) !important;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+
+
+
+/* =========================================================
+   BHU-DRISHTI PLATFORM (v2) — base styles
+   ========================================================= */
+.bd-root {
+  font-family: var(--font-plex);
+  background: var(--color-ink-900);
+  color: var(--color-fg);
+  min-height: 100vh;
+  color-scheme: dark;
+}
+.bd-root ::selection { background: #4ea1ff55; }
+.bd-num { font-family: var(--font-plexmono); font-variant-numeric: tabular-nums; }
+.bd-card {
+  background: var(--color-ink-800);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+}
+.bd-card-2 { background: var(--color-ink-750); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; }
+.bd-hairline { border-color: rgba(255, 255, 255, 0.07); }
+.bd-topo {
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(78, 161, 255, 0.10), transparent 55%),
+    radial-gradient(ellipse at 90% 30%, rgba(34, 197, 94, 0.05), transparent 50%);
+}
+.bd-grid-bg {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+}
+@keyframes bd-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.bd-pulse { animation: bd-pulse 1.6s ease-in-out infinite; }
+@keyframes bd-flow { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+.bd-flow { stroke-dasharray: 6 6; animation: bd-flow 1.2s linear infinite; }
+@keyframes bd-ping { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(2.4); opacity: 0; } }
+.bd-ping { animation: bd-ping 1.8s cubic-bezier(0,0,.2,1) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .bd-pulse, .bd-flow, .bd-ping { animation: none; }
+}
+.bd-root :focus-visible { outline: 2px solid var(--color-signal); outline-offset: 2px; border-radius: 6px; }
+
+/* Leaflet dark control-room styling */
+.bd-root .bd-dark-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.82) contrast(0.92) saturate(0.35); }
+.bd-root .leaflet-container { background: #0b0f14; font-family: var(--font-plex); border-radius: 12px; }
+.bd-root .leaflet-popup-content-wrapper, .bd-root .leaflet-popup-tip {
+  background: #121821; color: #e6edf3; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,.5);
+}
+.bd-root .leaflet-popup-content { margin: 12px 14px; min-width: 220px; }
+.bd-root .leaflet-control-attribution { background: rgba(11,15,20,0.8) !important; color: #8594a6; font-size: 10px; }
+.bd-root .leaflet-control-attribution a { color: #b3bfcc; }
+.bd-root .leaflet-bar a { background: #121821; color: #e6edf3; border-bottom-color: #2c3848; }
+.bd-root .leaflet-bar a:hover { background: #18202b; }
+
+/* Print (reports → Save as PDF) */
+@media print {
+  .bd-no-print { display: none !important; }
+  .bd-root { background: #fff !important; color: #000 !important; }
+  .bd-print-area .bd-card, .bd-print-area .bd-card-2 { background: #fff !important; border-color: #ccc !important; color: #000 !important; }
+  .bd-print-area * { color: #000 !important; }
+}
